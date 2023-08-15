@@ -11,6 +11,9 @@ TODO application
 - Stream API - для обработки коллекций данных
 - Collection API - для управления списком дел
 - JPA (Java Persistence API) - для работы с базой данных
+- Primefaces - библиотека UI
+- СУБД - PostgreSQL
+- ORM - EclipseLink - для работы с базой данных
 
 ## Возможности
 Приложение Todo List предоставляет следующие возможности:
