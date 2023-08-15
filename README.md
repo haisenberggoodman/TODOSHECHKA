@@ -14,6 +14,7 @@ TODO application
 - Primefaces - библиотека UI
 - СУБД - PostgreSQL
 - ORM - EclipseLink - для работы с базой данных
+- WildFly 14 - Application Server
 
 ## Возможности
 Приложение Todo List предоставляет следующие возможности:
