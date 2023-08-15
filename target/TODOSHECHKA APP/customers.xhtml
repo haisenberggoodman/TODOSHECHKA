@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <h:outputStylesheet>
+            th, td {
+                text-align: center;
+            }
+
+            h3 {
+                margin-top: 0;
+                text-align: center;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+                -webkit-box-sizing:border-box;
+                -moz-box-sizing: border-box;
+            }
+
+        </h:outputStylesheet>
+    </h:head>
+    <h:body>
+        <p:outputPanel>
+            <h3>Текущие задачи</h3>
+            <div class="ui-g">
+                <div class="ui-g-2"/>
+                <div class="ui-g-8">
+                    <h:form id="todos">
+                        <p:growl id="growl" sticky="true" />
+
+                        <p:dataTable id="todosList" var="todo" value="#{todosBean.todos}">
+                            <p:column headerText="Id">
+                                <h:outputText value="#{todo.id}"/>
+                            </p:column>
+
+                            <p:column headerText="Задание">
+                                <p:inputText id="contentInput" value="#{todo.content}"/>
+                            </p:column>
+
+                            <p:column headerText="Дата создания">
+                                <h:outputText id="creationTimeInput" value="#{todo.creationTime}"/>
+                            </p:column>
+
+                            <p:column headerText="Выполнить до">
+                                <h:outputText value="#{todo.dueDate}">
+                                    <f:convertDateTime type="localDate" pattern="dd.MM.yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Выполнено">
+                                <p:inputText id="completedInput" value="#{todo.completed}"/>
+                            </p:column>
+
+                            <p:column headerText="Важное">
+                                <p:inputText id="importantInput" value="#{todo.important}"/>
+                            </p:column>
+
+                            <p:column headerText="ID Задания">
+                                <h:outputText id = "todoIdInput" value="#{todo.todoId}"/>
+                            </p:column>
+
+                            <!--Удалить-->
+                            <p:column>
+                                <p:commandButton update="todosList" value="Удал." icon="ui-icon-closethick"
+                                                 action="#{todosBean.delete(todo)}"
+                                                 styleClass="ui-priority-primary">
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                        <!--Сохранить-->
+                        <p:commandButton style="float: right" id="save" value="Сохранить" styleClass="ui-priority-primary"
+                                         action="#{todosBean.update}" icon="ui-icon-disk" update="growl">
+                            <f:ajax execute="@form" render="@form"/>
+                        </p:commandButton>
+                        <!--Выбрать только выполненные-->
+                        <p:commandButton style="float: left" id="isCompleted" value="Только выполненные" styleClass="ui-priority-primary"
+                                         action="#{todosBean.findCompleted()}" icon="ui-icon-disk" update="growl">
+                            <f:ajax execute="@form" render="@form"/>
+                        </p:commandButton>
+                        <!--Выбрать только важные-->
+                        <p:commandButton style="float: left" id="isImportant" value="Только важные" styleClass="ui-priority-primary"
+                                         action="#{todosBean.findImportant()}" icon="ui-icon-disk" update="growl">
+                            <f:ajax execute="@form" render="@form"/>
+                        </p:commandButton>
+                    </h:form>
+                </div>
+                <div class="ui-g-2">
+                </div>
+            </div>
+            <h3>Создать новое задание</h3>
+            <div class="ui-g">
+                <div class="ui-g-2">
+                </div>
+                <div class="ui-g-8">
+                    <h:form id="add">
+                        <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+                            <p:outputLabel for="content" value="Задание"/>
+                            <p:inputText id="content" value="#{todosBean.todo.content}"/>
+                            <p:message for="content"/>
+
+                            <p:outputLabel for="dueDate" value="Выполнить до"/>
+                            <p:calendar id="dueDate"
+                                        value="#{todosBean.todo.dueDate}" pattern="dd.MM.yyyy"
+                                        mask="true">
+                                <f:convertDateTime type="localDate" pattern="dd.MM.yyyy"/>
+                            </p:calendar>
+                            <p:message for="dueDate"/>
+
+                            <p:outputLabel for="completed" value="Выполнено"/>
+                            <p:inputText id="completed"
+                                         value="#{todosBean.todo.completed}">
+                            </p:inputText>
+                            <p:message for="completed"/>
+
+                            <p:outputLabel for="important" value="Важное"/>
+                            <p:inputText id="important"
+                                         value="#{todosBean.todo.important}">
+                            </p:inputText>
+                            <p:message for="important"/>
+
+                            <p:commandButton update="@form :todos:todosList" value="Добавить"
+                                             action="#{todosBean.add}">
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </h:form>
+                </div>
+                <div class="ui-g-2">
+                </div>
+            </div>
+        </p:outputPanel>
+    </h:body>
+</f:view>
+</html>

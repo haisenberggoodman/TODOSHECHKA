@@ -1,0 +1,4 @@
+com\webvasev\control\TodoManager.class
+com\webvasev\entity\Todo.class
+com\webvasev\control\InitialTodoFilter.class
+com\webvasev\beans\TodosBean.class

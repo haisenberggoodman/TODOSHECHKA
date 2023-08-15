@@ -1,0 +1,9 @@
+CREATE TABLE todo (
+    id SERIAL PRIMARY KEY,
+    content VARCHAR(255) NOT NULL,
+    creation_time DATE NOT NULL,
+    due_date DATE NOT NULL,
+    completed BOOLEAN NOT NULL,
+    important BOOLEAN NOT NULL,
+    todo_id VARCHAR(8)
+);
