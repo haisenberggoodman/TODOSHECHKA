@@ -1,5 +1,6 @@
 package com.webvasev.beans;
 
+import com.webvasev.control.TodoFilter;
 import com.webvasev.control.TodoManager;
 import com.webvasev.entity.Todo;
 
@@ -34,11 +35,15 @@ public class TodosBean implements Serializable {
     }
 
     public void findCompleted() {
-        todoManager.findCompletedTodos();
+        TodoFilter filter = Todo::isCompleted;
+
+        this.todos = todoManager.filterTodos(filter);
     }
 
     public void findImportant() {
-        todoManager.findImportantTodos();
+        TodoFilter filter = Todo::isImportant;
+
+        this.todos = todoManager.filterTodos(filter);
     }
 
     public void add() {

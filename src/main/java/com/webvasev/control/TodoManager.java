@@ -17,23 +17,20 @@
         @PersistenceContext
         private EntityManager entityManager;
 
+        private List<Todo> allTodos;
+
         public List<Todo> loadAllTodos() {
-            return this.entityManager.createQuery("SELECT t FROM Todo t", Todo.class).getResultList();
+            if (allTodos == null) {
+                allTodos = entityManager.createQuery("SELECT t FROM Todo t", Todo.class).getResultList();
+            }
+            return allTodos;
         }
 
-        public List<Todo> findCompletedTodos() {
-            List<Todo> todos = this.entityManager.createQuery("SELECT t FROM Todo t", Todo.class).getResultList();
+        public List<Todo> filterTodos(TodoFilter filter) {
+            List<Todo> todos = loadAllTodos();
 
             return todos.stream()
-                    .filter(Todo::isCompleted)
-                    .collect(Collectors.toList());
-        }
-
-        public List<Todo> findImportantTodos() {
-            List<Todo> todos = this.entityManager.createQuery("SELECT t FROM Todo t", Todo.class).getResultList();
-
-            return todos.stream()
-                    .filter(Todo::isImportant)
+                    .filter(filter::myFilter)
                     .collect(Collectors.toList());
         }
 
